@@ -1,0 +1,100 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="m-2-gdil-information-heading"
+        data-cy="InformationCreateUpdateHeading"
+        m2GdilTranslate="monteecompetencebackApp.information.home.createOrEditLabel"
+      >
+        Créer ou éditer un Information
+      </h2>
+
+      <div>
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" m2GdilTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.information.titre" for="field_titre">Titre</label>
+          <input type="text" class="form-control" name="titre" id="field_titre" data-cy="titre" formControlName="titre" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.information.imageInfos" for="field_imageInfos"
+            >Image Infos</label
+          >
+          <div>
+            @if (editForm.get('imageInfos')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('imageInfos')!.value!, editForm.get('imageInfosContentType')!.value!)"
+                  m2GdilTranslate="entity.action.open"
+                  >Ouvrir</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('imageInfosContentType')!.value }}, {{ byteSize(editForm.get('imageInfos')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ imageInfos: undefined, imageInfosContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_imageInfos"
+              data-cy="imageInfos"
+              (change)="setFileData($event, 'imageInfos', false)"
+              m2GdilTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageInfos"
+            id="field_imageInfos"
+            data-cy="imageInfos"
+            formControlName="imageInfos"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageInfosContentType"
+            id="field_imageInfosContentType"
+            formControlName="imageInfosContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.information.contenu" for="field_contenu">Contenu</label>
+          <input type="text" class="form-control" name="contenu" id="field_contenu" data-cy="contenu" formControlName="contenu" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

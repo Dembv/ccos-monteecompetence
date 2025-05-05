@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "changelogDate": "20250424190430"
+  },
+  "applications": ["monteecompetenceback"],
+  "dto": "mapstruct",
+  "entityTableName": "etudiant",
+  "fields": [
+    {
+      "fieldName": "codeEtudiant",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emailPersonnel",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sexe",
+      "fieldType": "Sexe",
+      "fieldValues": "M,F"
+    },
+    {
+      "fieldName": "dateNaissance",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "name": "Etudiant",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "inscription",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "inscriptions",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

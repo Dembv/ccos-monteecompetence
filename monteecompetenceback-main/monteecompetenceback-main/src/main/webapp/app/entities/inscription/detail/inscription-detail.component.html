@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inscription) {
+      <div>
+        <h2 data-cy="inscriptionDetailsHeading">
+          <span m2GdilTranslate="monteecompetencebackApp.inscription.detail.title">Inscription</span>
+        </h2>
+
+        <hr />
+
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        <m-2-gdil-alert></m-2-gdil-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span m2GdilTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inscription.id }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.inscription.dateInscription">Date Inscription</span></dt>
+          <dd>
+            <span>{{ inscription.dateInscription | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.inscription.etudiant">Etudiant</span></dt>
+          <dd>
+            @if (inscription.etudiant) {
+              <div>
+                <a [routerLink]="['/etudiant', inscription.etudiant.id, 'view']">{{ inscription.etudiant.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.inscription.niveau">Niveau</span></dt>
+          <dd>
+            @if (inscription.niveau) {
+              <div>
+                <a [routerLink]="['/niveau', inscription.niveau.id, 'view']">{{ inscription.niveau.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.inscription.anneeAcademique">Annee Academique</span></dt>
+          <dd>
+            @if (inscription.anneeAcademique) {
+              <div>
+                <a [routerLink]="['/annee-academique', inscription.anneeAcademique.id, 'view']">{{ inscription.anneeAcademique.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.inscription.formation">Formation</span></dt>
+          <dd>
+            @if (inscription.formation) {
+              <div>
+                <a [routerLink]="['/formation', inscription.formation.id, 'view']">{{ inscription.formation.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/inscription', inscription.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

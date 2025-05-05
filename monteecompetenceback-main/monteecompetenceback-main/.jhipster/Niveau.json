@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "changelogDate": "20250424190530"
+  },
+  "applications": ["monteecompetenceback"],
+  "dto": "mapstruct",
+  "entityTableName": "niveau",
+  "fields": [
+    {
+      "fieldName": "codeNiveau",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Niveau",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscription",
+      "otherEntityRelationshipName": "niveau",
+      "relationshipName": "inscriptions",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "changelogDate": "20250424190930"
+  },
+  "applications": ["monteecompetenceback"],
+  "dto": "mapstruct",
+  "entityTableName": "inscription",
+  "fields": [
+    {
+      "fieldName": "dateInscription",
+      "fieldType": "Instant"
+    }
+  ],
+  "name": "Inscription",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "inscriptions",
+      "relationshipName": "etudiant",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "niveau",
+      "otherEntityRelationshipName": "inscriptions",
+      "relationshipName": "niveau",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "anneeAcademique",
+      "otherEntityRelationshipName": "inscriptions",
+      "relationshipName": "anneeAcademique",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "inscriptions",
+      "relationshipName": "formation",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

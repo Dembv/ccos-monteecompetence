@@ -1,0 +1,113 @@
+<div>
+  <h2 id="page-heading" data-cy="NiveauHeading">
+    <span m2GdilTranslate="monteecompetencebackApp.niveau.home.title">Niveaus</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.niveau.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-niveau"
+        [routerLink]="['/niveau/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.niveau.home.createLabel">Créer un nouveau Niveau</span>
+      </button>
+    </div>
+  </h2>
+
+  <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+  <m-2-gdil-alert></m-2-gdil-alert>
+
+  @if (niveaus?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span m2GdilTranslate="monteecompetencebackApp.niveau.home.notFound">Aucun Niveau trouvé</span>
+    </div>
+  }
+
+  @if (niveaus && niveaus.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr m2GdilSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" m2GdilSortBy="id">
+              <div class="d-flex">
+                <span m2GdilTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="codeNiveau">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.niveau.codeNiveau">Code Niveau</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="libelle">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.niveau.libelle">Libelle</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (niveau of niveaus; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/niveau', niveau.id, 'view']">{{ niveau.id }}</a>
+              </td>
+              <td>{{ niveau.codeNiveau }}</td>
+              <td>{{ niveau.libelle }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/niveau', niveau.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/niveau', niveau.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(niveau)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (niveaus && niveaus.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <m-2-gdil-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></m-2-gdil-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,279 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  overflow-x: hidden;
+  font-family: 'Poppins-Regular';
+}
+
+.sidebar {
+  height: 100vh;
+  background: #B55D2D;
+  color: #fff;
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 25%;
+  padding-top: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar ul li {
+  padding: 0.5vw 1vw;
+}
+
+.sidebar-menu-element {
+  background-color: #B55D2D;
+  color: #fff;
+}
+
+.sidebar-menu-element:hover {
+  background-color: #fff !important;
+  color: #B55D2D;
+}
+
+.sidebar-menu-element:active {
+  background-color: #fff !important;
+  color: #B55D2D;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar ul li a:hover {
+  background: #495057;
+  border-radius: 5px;
+}
+
+.main {
+  margin-left: 25%;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.main.collapsed {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  background-color: #fff;
+  border-color: #B55D2D;
+  border-style: solid;
+  border-width: 1px;
+}
+
+
+@media (max-width: 767px) {
+  .sidebar {
+  width: 75%;
+  transform: translateX(-100%);
+  }
+  .sidebar.show {
+  transform: translateX(0);
+  }
+  .main {
+  margin-left: 0;
+  }
+}
+
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.user-dropdown a {
+  color: black;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+}
+
+.user-dropdown a:hover {
+  background-color: #f1f1f1;
+}
+
+.text-marron {
+  color: #B55D2D !important;
+}
+
+.text-marron:hover{
+  color: #B55D2D !important;
+}
+
+.text-beige {
+  color: #D2C097 !important;
+}
+
+.text-bleu {
+  color: #3588B2 !important;
+}
+
+.btn-bg-marron {
+  background-color: #B55D2D !important;
+  color: #fff !important;
+}
+
+.btn-bg-marron:hover {
+  border-style: solid !important;
+  border-color: #B55D2D !important;
+  border-width: 1px !important;
+  color: #B55D2D !important;
+  background-color: #fff !important;
+}
+
+.btn-bg-marron:active {
+  border-style: solid !important;
+  border-color: #B55D2D !important;
+  border-width: 1px !important;
+  color: #B55D2D !important;
+  background-color: #fff !important;
+}
+
+.btn-bg-white {
+  background-color: #fff !important;
+  color: #B55D2D !important;
+  border-color: #B55D2D !important;
+  border-width: 1px !important;
+  border-radius: 4px !important;
+  border-style: solid !important;
+}
+
+.btn-bg-white:hover {
+  background-color: #B55D2D;
+  color: #fff;
+}
+
+.btn-bg-white:active {
+  background-color: #B55D2D !important;
+  color: #fff !important;
+}
+
+.bg-marron {
+  background-color: #B55D2D;
+}
+
+.bg-beige {
+  background-color: #D2C097;
+}
+
+.bg-bleu {
+  background-color: #3588B2;
+}
+
+.p-2-10 {
+  padding: 2vw 10vw;
+}
+
+.p-2-2 {
+  padding: 2vw 2vw;
+}
+
+.p-2-4 {
+  padding: 2vw 4vw;
+}
+
+.p-1-4 {
+  padding: 1vw 4vw;
+}
+
+.p-1-1 {
+  padding: 1vw 1vw;
+}
+
+.fs-24 {
+  font-size: 24px !important;
+}
+
+.fs-36 {
+  font-size: 36px !important;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
+.icone-sidebar {
+  font-size: 24px;
+}
+
+.icone-sidebar svg{
+  width: 24px;
+  height: 24px;
+}
+
+.icone-sidebar-submenu svg{
+  width: 20px;
+  height: 20px;
+}
+
+.icone-sidebar svg g {
+  fill: #fff;
+}
+
+.icone-sidebar-submenu svg g {
+  fill: #fff;
+}
+
+.header-scolarite {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+}
+
+.modal-scolarite-section {
+  border-color: #B55D2D;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype'); /* Format TrueType pour les fichiers .ttf */
+}
+
+@font-face {
+  font-family: 'Poppins-Bold';
+  src: url('assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype'); /* Format TrueType pour les fichiers .ttf */
+}
+
+@font-face {
+  font-family: 'Poppins-SemiBold';
+  src: url('assets/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype'); /* Format TrueType pour les fichiers .ttf */
+}
+
+body {
+  font-family: 'Poppins-Regular' !important;
+}

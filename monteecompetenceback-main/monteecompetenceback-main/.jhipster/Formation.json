@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "changelogDate": "20250424190730"
+  },
+  "applications": ["monteecompetenceback"],
+  "dto": "mapstruct",
+  "entityTableName": "formation",
+  "fields": [
+    {
+      "fieldName": "codeFormation",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "libelleFormation",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Formation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscription",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "inscriptions",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

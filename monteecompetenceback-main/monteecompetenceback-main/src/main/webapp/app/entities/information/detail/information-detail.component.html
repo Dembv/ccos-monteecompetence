@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (information) {
+      <div>
+        <h2 data-cy="informationDetailsHeading">
+          <span m2GdilTranslate="monteecompetencebackApp.information.detail.title">Information</span>
+        </h2>
+
+        <hr />
+
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        <m-2-gdil-alert></m-2-gdil-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span m2GdilTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ information.id }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.information.titre">Titre</span></dt>
+          <dd>
+            <span>{{ information.titre }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.information.imageInfos">Image Infos</span></dt>
+          <dd>
+            @if (information.imageInfos) {
+              <div>
+                <a (click)="openFile(information.imageInfos, information.imageInfosContentType)" m2GdilTranslate="entity.action.open"
+                  >Ouvrir</a
+                >
+                {{ information.imageInfosContentType }}, {{ byteSize(information.imageInfos) }}
+              </div>
+            }
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.information.contenu">Contenu</span></dt>
+          <dd>
+            <span>{{ information.contenu }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/information', information.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

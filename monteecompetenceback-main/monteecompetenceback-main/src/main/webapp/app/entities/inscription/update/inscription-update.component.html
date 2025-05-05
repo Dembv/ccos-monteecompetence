@@ -1,0 +1,127 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="m-2-gdil-inscription-heading"
+        data-cy="InscriptionCreateUpdateHeading"
+        m2GdilTranslate="monteecompetencebackApp.inscription.home.createOrEditLabel"
+      >
+        Créer ou éditer un Inscription
+      </h2>
+
+      <div>
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" m2GdilTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.inscription.dateInscription" for="field_dateInscription"
+            >Date Inscription</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateInscription"
+              data-cy="dateInscription"
+              type="datetime-local"
+              class="form-control"
+              name="dateInscription"
+              formControlName="dateInscription"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.inscription.etudiant" for="field_etudiant">Etudiant</label>
+          <select
+            class="form-control"
+            id="field_etudiant"
+            data-cy="etudiant"
+            name="etudiant"
+            formControlName="etudiant"
+            [compareWith]="compareEtudiant"
+          >
+            <option [ngValue]="null"></option>
+            @for (etudiantOption of etudiantsSharedCollection; track $index) {
+              <option [ngValue]="etudiantOption">{{ etudiantOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.inscription.niveau" for="field_niveau">Niveau</label>
+          <select
+            class="form-control"
+            id="field_niveau"
+            data-cy="niveau"
+            name="niveau"
+            formControlName="niveau"
+            [compareWith]="compareNiveau"
+          >
+            <option [ngValue]="null"></option>
+            @for (niveauOption of niveausSharedCollection; track $index) {
+              <option [ngValue]="niveauOption">{{ niveauOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.inscription.anneeAcademique" for="field_anneeAcademique"
+            >Annee Academique</label
+          >
+          <select
+            class="form-control"
+            id="field_anneeAcademique"
+            data-cy="anneeAcademique"
+            name="anneeAcademique"
+            formControlName="anneeAcademique"
+            [compareWith]="compareAnneeAcademique"
+          >
+            <option [ngValue]="null"></option>
+            @for (anneeAcademiqueOption of anneeAcademiquesSharedCollection; track $index) {
+              <option [ngValue]="anneeAcademiqueOption">{{ anneeAcademiqueOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.inscription.formation" for="field_formation">Formation</label>
+          <select
+            class="form-control"
+            id="field_formation"
+            data-cy="formation"
+            name="formation"
+            formControlName="formation"
+            [compareWith]="compareFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (formationOption of formationsSharedCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "annotations": {
+    "changelogDate": "20250424190630"
+  },
+  "applications": ["monteecompetenceback"],
+  "dto": "mapstruct",
+  "entityTableName": "annee_academique",
+  "fields": [
+    {
+      "fieldName": "annee",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "name": "AnneeAcademique",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscription",
+      "otherEntityRelationshipName": "anneeAcademique",
+      "relationshipName": "inscriptions",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,154 @@
+<div>
+  <h2 id="page-heading" data-cy="EtudiantHeading">
+    <span m2GdilTranslate="monteecompetencebackApp.etudiant.home.title">Etudiants</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.etudiant.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-etudiant"
+        [routerLink]="['/etudiant/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.etudiant.home.createLabel">Créer un nouveau Etudiant</span>
+      </button>
+    </div>
+  </h2>
+
+  <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+  <m-2-gdil-alert></m-2-gdil-alert>
+
+  @if (etudiants?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span m2GdilTranslate="monteecompetencebackApp.etudiant.home.notFound">Aucun Etudiant trouvé</span>
+    </div>
+  }
+
+  @if (etudiants && etudiants.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr m2GdilSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" m2GdilSortBy="id">
+              <div class="d-flex">
+                <span m2GdilTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="codeEtudiant">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.codeEtudiant">Code Etudiant</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="telephone">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.telephone">Telephone</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="emailPersonnel">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.emailPersonnel">Email Personnel</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="adresse">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.adresse">Adresse</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="sexe">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.sexe">Sexe</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="dateNaissance">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.dateNaissance">Date Naissance</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="user.id">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.etudiant.user">User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (etudiant of etudiants; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/etudiant', etudiant.id, 'view']">{{ etudiant.id }}</a>
+              </td>
+              <td>{{ etudiant.codeEtudiant }}</td>
+              <td>{{ etudiant.telephone }}</td>
+              <td>{{ etudiant.emailPersonnel }}</td>
+              <td>{{ etudiant.adresse }}</td>
+              <td m2GdilTranslate="{{ 'monteecompetencebackApp.Sexe.' + etudiant.sexe }}">{{ etudiant.sexe }}</td>
+              <td>{{ etudiant.dateNaissance | formatMediumDate }}</td>
+              <td>
+                {{ etudiant.user?.id }}
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/etudiant', etudiant.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/etudiant', etudiant.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(etudiant)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (etudiants && etudiants.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <m-2-gdil-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></m-2-gdil-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

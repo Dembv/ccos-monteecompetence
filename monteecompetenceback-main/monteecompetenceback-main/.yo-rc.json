@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "monteecompetenceback",
+    "buildTool": "maven",
+    "cacheProvider": "ehcache",
+    "clientFramework": "angular",
+    "devServerPort": 4200,
+    "enableHibernateCache": true,
+    "enableTranslation": true,
+    "entities": ["Etudiant", "Niveau", "AnneeAcademique", "Formation", "Information", "Inscription"],
+    "jhiPrefix": "m2Gdil",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "NjRiZjg3OGFkMDdjYTk2YjdjNWM4NTk3ZDhhZDAzYzc0ZmIxODIxZDUwMjI3NjhiNmI4MWJlZDIzMDQ0NGUxYzdkZTlmZmI4NTRlYTczZDNhMjAyNWJjMDkzNTUzNWU0ZThiNDczYjkwM2Y0ODJiZTcxZjBiMjg3ZWU5YzAyYmU=",
+    "languages": ["fr", "en"],
+    "lastLiquibaseTimestamp": 1745521770000,
+    "nativeLanguage": "fr",
+    "packageFolder": "dev/junior/ccos",
+    "packageName": "dev.junior.ccos",
+    "prodDatabaseType": "postgresql"
+  }
+}

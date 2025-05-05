@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (formation) {
+      <div>
+        <h2 data-cy="formationDetailsHeading"><span m2GdilTranslate="monteecompetencebackApp.formation.detail.title">Formation</span></h2>
+
+        <hr />
+
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        <m-2-gdil-alert></m-2-gdil-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span m2GdilTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ formation.id }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.formation.codeFormation">Code Formation</span></dt>
+          <dd>
+            <span>{{ formation.codeFormation }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.formation.libelleFormation">Libelle Formation</span></dt>
+          <dd>
+            <span>{{ formation.libelleFormation }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/formation', formation.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="m-2-gdil-formation-heading"
+        data-cy="FormationCreateUpdateHeading"
+        m2GdilTranslate="monteecompetencebackApp.formation.home.createOrEditLabel"
+      >
+        Créer ou éditer un Formation
+      </h2>
+
+      <div>
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" m2GdilTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.formation.codeFormation" for="field_codeFormation"
+            >Code Formation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codeFormation"
+            id="field_codeFormation"
+            data-cy="codeFormation"
+            formControlName="codeFormation"
+          />
+          @if (editForm.get('codeFormation')!.invalid && (editForm.get('codeFormation')!.dirty || editForm.get('codeFormation')!.touched)) {
+            <div>
+              @if (editForm.get('codeFormation')?.errors?.required) {
+                <small class="form-text text-danger" m2GdilTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.formation.libelleFormation" for="field_libelleFormation"
+            >Libelle Formation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleFormation"
+            id="field_libelleFormation"
+            data-cy="libelleFormation"
+            formControlName="libelleFormation"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div>
+  <h2>
+    <span id="metrics-page-heading" m2GdilTranslate="metrics.title" data-cy="metricsPageHeading">Métriques de l&apos;application</span>
+
+    <button class="btn btn-primary float-end" (click)="refresh()">
+      <fa-icon icon="sync"></fa-icon> <span m2GdilTranslate="metrics.refresh.button">Rafraîchir</span>
+    </button>
+  </h2>
+
+  <h3 m2GdilTranslate="metrics.jvm.title">Métriques de la JVM</h3>
+
+  @if (metrics && !updatingMetrics) {
+    <div class="row">
+      <m-2-gdil-jvm-memory class="col-md-4" [updating]="updatingMetrics" [jvmMemoryMetrics]="metrics.jvm"></m-2-gdil-jvm-memory>
+
+      <m-2-gdil-jvm-threads class="col-md-4" [threads]="threads"></m-2-gdil-jvm-threads>
+
+      <m-2-gdil-metrics-system
+        class="col-md-4"
+        [updating]="updatingMetrics"
+        [systemMetrics]="metrics.processMetrics"
+      ></m-2-gdil-metrics-system>
+    </div>
+  }
+
+  @if (metrics && metricsKeyExists('garbageCollector')) {
+    <m-2-gdil-metrics-garbagecollector
+      [updating]="updatingMetrics"
+      [garbageCollectorMetrics]="metrics.garbageCollector"
+    ></m-2-gdil-metrics-garbagecollector>
+  }
+
+  @if (updatingMetrics) {
+    <div class="well well-lg" m2GdilTranslate="metrics.updating">Mise à jour...</div>
+  }
+
+  @if (metrics && metricsKeyExists('http.server.requests')) {
+    <m-2-gdil-metrics-request [updating]="updatingMetrics" [requestMetrics]="metrics['http.server.requests']"></m-2-gdil-metrics-request>
+  }
+
+  @if (metrics && metricsKeyExists('services')) {
+    <m-2-gdil-metrics-endpoints-requests
+      [updating]="updatingMetrics"
+      [endpointsRequestsMetrics]="metrics.services"
+    ></m-2-gdil-metrics-endpoints-requests>
+  }
+
+  @if (metrics && metricsKeyExists('cache')) {
+    <m-2-gdil-metrics-cache [updating]="updatingMetrics" [cacheMetrics]="metrics.cache"></m-2-gdil-metrics-cache>
+  }
+
+  @if (metrics && metricsKeyExistsAndObjectNotEmpty('databases')) {
+    <m-2-gdil-metrics-datasource [updating]="updatingMetrics" [datasourceMetrics]="metrics.databases"></m-2-gdil-metrics-datasource>
+  }
+</div>

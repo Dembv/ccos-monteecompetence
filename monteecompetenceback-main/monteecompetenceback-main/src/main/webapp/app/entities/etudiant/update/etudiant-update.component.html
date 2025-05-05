@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="m-2-gdil-etudiant-heading"
+        data-cy="EtudiantCreateUpdateHeading"
+        m2GdilTranslate="monteecompetencebackApp.etudiant.home.createOrEditLabel"
+      >
+        Créer ou éditer un Etudiant
+      </h2>
+
+      <div>
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" m2GdilTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.codeEtudiant" for="field_codeEtudiant"
+            >Code Etudiant</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codeEtudiant"
+            id="field_codeEtudiant"
+            data-cy="codeEtudiant"
+            formControlName="codeEtudiant"
+          />
+          @if (editForm.get('codeEtudiant')!.invalid && (editForm.get('codeEtudiant')!.dirty || editForm.get('codeEtudiant')!.touched)) {
+            <div>
+              @if (editForm.get('codeEtudiant')?.errors?.required) {
+                <small class="form-text text-danger" m2GdilTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.telephone" for="field_telephone">Telephone</label>
+          <input type="text" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.emailPersonnel" for="field_emailPersonnel"
+            >Email Personnel</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="emailPersonnel"
+            id="field_emailPersonnel"
+            data-cy="emailPersonnel"
+            formControlName="emailPersonnel"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.adresse" for="field_adresse">Adresse</label>
+          <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.sexe" for="field_sexe">Sexe</label>
+          <select class="form-control" name="sexe" formControlName="sexe" id="field_sexe" data-cy="sexe">
+            <option [ngValue]="null">{{ 'monteecompetencebackApp.Sexe.null' | translate }}</option>
+            @for (sexe of sexeValues; track $index) {
+              <option [value]="sexe">{{ 'monteecompetencebackApp.Sexe.' + sexe | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.dateNaissance" for="field_dateNaissance"
+            >Date Naissance</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateNaissance"
+              data-cy="dateNaissance"
+              type="text"
+              class="form-control"
+              name="dateNaissance"
+              ngbDatepicker
+              #dateNaissanceDp="ngbDatepicker"
+              formControlName="dateNaissance"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateNaissanceDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" m2GdilTranslate="monteecompetencebackApp.etudiant.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

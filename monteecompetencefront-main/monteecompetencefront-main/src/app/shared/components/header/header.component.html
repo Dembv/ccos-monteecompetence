@@ -1,0 +1,42 @@
+<div class="d-flex header-bg text-white justify-content-between align-items-center p-2-2 mb-4 header-scolarite">
+  <div class="d-flex align-items-center">
+  <!-- Hamburger on mobile -->
+  <button
+    class="btn d-md-none me-2"
+    id="menu-toggle"
+    (click)="sidebar?.toggleSidebar($event)">
+      <i class="bi bi-list text-marron"></i>
+kk
+  </button>
+  <h4 class="mb-0">Dashboard</h4>
+</div>
+
+<!-- <div class="user-menu position-relative dropdown">
+  <div
+    class="d-flex align-items-center"
+    id="user-menu-toggle"
+    (click)="toggleUserMenu()"
+    style="cursor: pointer;"
+  >
+    <i class="bi bi-person-circle me-2 icone-sidebar"></i>
+    <span>Admin</span>
+    <i class="bi bi-caret-down-fill ms-2"></i>
+  </div>
+
+  <div
+    *ngIf="isUserMenuOpen"
+    class="user-dropdown dropdown-menu-end position-absolute bg-white text-dark p-2 rounded shadow mt-2"
+    style="z-index: 1000;"
+  >
+    <a href="#" class="dropdown-item" (click)="logout()">Se déconnecter</a>
+  </div>
+</div> -->
+<div id="disparaitre2" class="dropdown">
+  <a class="nav-link dropdown-toggle fs-6 text-white" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-person-circle me-2 icone-sidebar"></i>
+      <span class="text-disparaitre"> Admin </span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" (click)="logout()"> Se déconnecter</a></li>
+  </ul>
+</div>

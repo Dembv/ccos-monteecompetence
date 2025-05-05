@@ -1,0 +1,232 @@
+
+<app-scolarite-sidebar></app-scolarite-sidebar>
+<!-- Main Content -->
+<div class="main p-0">
+  <!--  -->
+  <app-header></app-header>
+  <!--  -->
+  <div class="d-flex justify-content-end p-1-4">
+    <a
+      class="btn btn-bg-marron d-inline-flex align-items-center px-4 py-2 text-decoration-none text-white fs-16"
+      (click)="openInscriptionFormModal()">
+      <span>Ajouter une inscription</span>
+      <i class="bi bi-plus-circle icone-sidebar-submenu ms-2"></i>
+    </a>
+  </div>
+
+  <div class="p-1-4">
+    <div class="modal fade" id="inscriptionFormModal" #inscriptionFormModalRef>
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-marron" id="modalAjoutEtudiantLabel">Ajouter une inscription</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="mb-3 col-md-6" formGroupName = "etudiant">
+                  <label for="id_etudiant" class="form-label">Etudiant</label>
+                  <select class="form-control" formControlName="id" id="id_etudiant">
+                    <option value="">-- Sélectionner un étudiant --</option>
+                    @for (etudiant of etudiants; track $index) {
+                      <option value="{{etudiant.id}}">{{etudiant.user.firstName}} {{etudiant.user.lastName}} | {{etudiant.codeEtudiant}}</option>
+                    }
+                  </select>
+                  <div *ngIf="inscriptionForm.get('etudiant.id')?.invalid && inscriptionForm.get('etudiant.id')?.touched" class="text-danger">
+                    <small>Le champ étudiant est requis.</small>
+                  </div>
+                </div>
+                <div class="mb-3 col-md-6" formGroupName = "niveau">
+                  <label for="id_niveau" class="form-label">Niveau</label>
+                  <select class="form-control" formControlName="id" id="id_niveau">
+                    <option value="">-- Sélectionner un niveau --</option>
+                    @for (niveau of niveaux; track $index) {
+                      <option value="{{niveau.id}}">{{niveau.libelle}}</option>
+                    }
+                  </select>
+                  <div *ngIf="inscriptionForm.get('niveau.id')?.invalid && inscriptionForm.get('niveau.id')?.touched" class="text-danger">
+                    <small>Le champ niveau est requis.</small>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-3 col-md-6" formGroupName = "anneeAcademique">
+                  <label for="id_annee" class="form-label">Année académique</label>
+                  <select class="form-control" formControlName="id" id="id_annee">
+                    <option value="">-- Sélectionner une année académique --</option>
+                    @for (annee of annees; track $index) {
+                      <option value="{{annee.id}}">{{annee.annee}}</option>
+                    }
+                  </select>
+                  <div *ngIf="inscriptionForm.get('anneeAcademique.id')?.invalid && inscriptionForm.get('anneeAcademique.id')?.touched" class="text-danger">
+                    <small>Le champ année académique est requis.</small>
+                  </div>
+                </div>
+                <div class="mb-3 col-md-6" formGroupName = "formation">
+                  <label for="id_formation" class="form-label">Formation</label>
+                  <select class="form-control" formControlName="id" id="id_formation">
+                    <option value="">-- Sélectionner une formation --</option>
+                    @for (formation of formations; track $index) {
+                      <option value="{{formation.id}}">{{formation.libelleFormation}}</option>
+                    }
+                  </select>
+                  <div *ngIf="inscriptionForm.get('formation.id')?.invalid && inscriptionForm.get('formation.id')?.touched" class="text-danger">
+                    <small>Le champ formation est requis.</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bouton -->
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn w-50 p-1-1 btn-bg-marron" [disabled]="inscriptionForm.invalid">Enregistrer</button>
+                <button
+                type="button"
+                class="btn btn-bg-white w-100 w-md-25"
+                (click)="closeInscriptionFormModal()">
+                Annuler
+              </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  -->
+  <div class="d-flex p-1-4">
+    <h5 class="fs-20 text-marron">Liste des étudiants</h5>
+  </div>
+
+  <!--  -->
+  <div class="p-1-4">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="">
+                <tr>
+                <th scope="col">Code étudiant</th>
+                <th scope="col">Nom complet</th>
+                <th scope="col">Date d'inscription</th>
+                <th scope="col">Année académique</th>
+                <th scope="col">Niveau</th>
+                <th scope="col">Formation</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+          <tbody>
+                <tr style="cursor: pointer;" *ngFor="let inscription of inscriptions" class="inscriptionViewModal" >
+                    <td (click)="openInscriptionViewModal(inscription)"> {{ inscription.etudiant.codeEtudiant }} </td>
+                    <td (click)="openInscriptionViewModal(inscription)"> {{ inscription.etudiant.user.firstName }} {{ inscription.etudiant.user.lastName }} </td>
+                    <td (click)="openInscriptionViewModal(inscription)"> {{ inscription.dateInscription | date:'dd/MM/yyyy' }} </td>
+                    <td (click)="openInscriptionViewModal(inscription)"> {{ inscription.anneeAcademique.annee }} </td>
+                    <td (click)="openInscriptionViewModal(inscription)"> {{ inscription.niveau.codeNiveau }} </td>
+                    <td (click)="openInscriptionViewModal(inscription)"> {{ inscription.formation.codeFormation }} </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm me-2 my-2 w-100"
+                        (click)="openInscriptionFormModal(inscription)">
+                        <i class="bi bi-pencil-square"></i> Éditer
+                        </button>
+                        <button class="btn btn-danger btn-sm w-100"
+                          (click)="onDelete(inscription.id)">
+                        <i class="bi bi-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+
+            <!-- Autres étudiants ici -->
+          </tbody>
+        </table>
+    </div>
+
+  </div>
+
+  <div class="p-2-2">
+    <div class="modal fade" id="inscriptionViewModal" tabindex="-1" aria-labelledby="modalEtudiantLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Largeur agrandie -->
+            <div class="modal-content">
+                <div class="modal-header p-2-2 bg-marron text-white">
+                    <h5 class="modal-title text-white" id="modalEtudiantLabel">Détails de l'étudiant</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+
+                <div class="modal-body p-2-2">
+
+                    <!-- Rectangle Informations Personnelles -->
+                    <div class="p-2-2 mb-4 modal-scolarite-section">
+                        <h6 class="mb-3 text-marron fs-20">Informations personnelles de l'étudiant</h6>
+                        <div class="row mb-2">
+                            <div class="col-md-6"><strong>Code étudiant :</strong> {{ selectedInscription?.etudiant?.codeEtudiant }}</div>
+                            <div class="col-md-6"><strong>Nom et Prénoms :</strong> {{ selectedInscription?.etudiant?.user?.firstName }} {{ selectedInscription?.etudiant?.user?.lastName }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-6"><strong>Date de naissance :</strong> {{ selectedInscription?.etudiant?.dateNaissance }}</div>
+                            <div class="col-md-6"><strong>Adresse email :</strong> {{ selectedInscription?.etudiant?.user?.email }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"><strong>Téléphone :</strong>  {{ selectedInscription?.etudiant?.telephone }}</div>
+                            <div class="col-md-6"><strong>Adresse :</strong> {{ selectedInscription?.etudiant?.adresse }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Rectangle Inscriptions -->
+                    <div class="p-2-2 modal-scolarite-section">
+                        <h6 class="mb-3 text-marron fs-20">Inscriptions</h6>
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>Niveau</th>
+                                    <th>Formation</th>
+                                    <th>Année académique</th>
+                                    <th>Date d'inscription</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                  @for (inscriptionEtudiant of inscriptionsEtudiant; track $index) {
+                                    <tr>
+                                      <td>{{inscriptionEtudiant.niveau.libelle}}</td>
+                                      <td>{{inscriptionEtudiant.formation.libelleFormation}}</td>
+                                      <td>{{inscriptionEtudiant.anneeAcademique.annee}}</td>
+                                      <td>{{inscriptionEtudiant.dateInscription | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                  }
+
+                                <!-- D'autres inscriptions peuvent être ajoutées ici -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="p-1-4">
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="inscriptionDeleteModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body">
+            Êtes-vous sûr de vouloir supprimer cette inscription ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

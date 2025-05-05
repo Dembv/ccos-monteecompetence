@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (niveau) {
+      <div>
+        <h2 data-cy="niveauDetailsHeading"><span m2GdilTranslate="monteecompetencebackApp.niveau.detail.title">Niveau</span></h2>
+
+        <hr />
+
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        <m-2-gdil-alert></m-2-gdil-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span m2GdilTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ niveau.id }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.niveau.codeNiveau">Code Niveau</span></dt>
+          <dd>
+            <span>{{ niveau.codeNiveau }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.niveau.libelle">Libelle</span></dt>
+          <dd>
+            <span>{{ niveau.libelle }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/niveau', niveau.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,157 @@
+<div>
+  <h2 id="page-heading" data-cy="InscriptionHeading">
+    <span m2GdilTranslate="monteecompetencebackApp.inscription.home.title">Inscriptions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.inscription.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inscription"
+        [routerLink]="['/inscription/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.inscription.home.createLabel">Créer un nouveau Inscription</span>
+      </button>
+    </div>
+  </h2>
+
+  <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+  <m-2-gdil-alert></m-2-gdil-alert>
+
+  @if (inscriptions?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span m2GdilTranslate="monteecompetencebackApp.inscription.home.notFound">Aucun Inscription trouvé</span>
+    </div>
+  }
+
+  @if (inscriptions && inscriptions.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr m2GdilSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" m2GdilSortBy="id">
+              <div class="d-flex">
+                <span m2GdilTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="dateInscription">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.inscription.dateInscription">Date Inscription</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="etudiant.id">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.inscription.etudiant">Etudiant</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="niveau.id">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.inscription.niveau">Niveau</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="anneeAcademique.id">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.inscription.anneeAcademique">Annee Academique</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="formation.id">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.inscription.formation">Formation</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inscription of inscriptions; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/inscription', inscription.id, 'view']">{{ inscription.id }}</a>
+              </td>
+              <td>{{ inscription.dateInscription | formatMediumDatetime }}</td>
+              <td>
+                @if (inscription.etudiant) {
+                  <div>
+                    <a [routerLink]="['/etudiant', inscription.etudiant.id, 'view']">{{ inscription.etudiant.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inscription.niveau) {
+                  <div>
+                    <a [routerLink]="['/niveau', inscription.niveau.id, 'view']">{{ inscription.niveau.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inscription.anneeAcademique) {
+                  <div>
+                    <a [routerLink]="['/annee-academique', inscription.anneeAcademique.id, 'view']">{{ inscription.anneeAcademique.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inscription.formation) {
+                  <div>
+                    <a [routerLink]="['/formation', inscription.formation.id, 'view']">{{ inscription.formation.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/inscription', inscription.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/inscription', inscription.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(inscription)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (inscriptions && inscriptions.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <m-2-gdil-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></m-2-gdil-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

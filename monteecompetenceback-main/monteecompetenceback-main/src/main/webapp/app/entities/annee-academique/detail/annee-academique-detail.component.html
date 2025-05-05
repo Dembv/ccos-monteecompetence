@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (anneeAcademique) {
+      <div>
+        <h2 data-cy="anneeAcademiqueDetailsHeading">
+          <span m2GdilTranslate="monteecompetencebackApp.anneeAcademique.detail.title">Annee Academique</span>
+        </h2>
+
+        <hr />
+
+        <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+        <m-2-gdil-alert></m-2-gdil-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span m2GdilTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ anneeAcademique.id }}</span>
+          </dd>
+          <dt><span m2GdilTranslate="monteecompetencebackApp.anneeAcademique.annee">Annee</span></dt>
+          <dd>
+            <span>{{ anneeAcademique.annee }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/annee-academique', anneeAcademique.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span m2GdilTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,239 @@
+
+<app-scolarite-sidebar></app-scolarite-sidebar>
+<!-- Main Content -->
+<div class="main p-0">
+  <!--  -->
+  <app-header></app-header>
+  <!--  -->
+  <div class="d-flex justify-content-end p-1-4">
+    <a
+      class="btn btn-bg-marron d-inline-flex align-items-center px-4 py-2 text-decoration-none text-white fs-16"
+      (click)="openEtudiantFormModal()">
+      <span>Ajouter un étudiant</span>
+      <i class="bi bi-plus-circle icone-sidebar-submenu ms-2"></i>
+    </a>
+  </div>
+
+
+
+  <!--  -->
+  <div class="d-flex p-1-4">
+    <h5 class="fs-20 text-marron">Liste des étudiants</h5>
+  </div>
+
+  <!--  -->
+  <div class="p-1-4">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="">
+                <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Code étudiant</th>
+                <th scope="col">Prénoms et Nom</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+          <tbody>
+                <tr *ngFor="let etudiant of etudiants" class="etudiantViewModal" >
+                    <td (click)="openEtudiantViewModal(etudiant)">
+                        <img src="assets/images/avatar-etudiant.avif" alt="Photo étudiant" class="img-thumbnail" style="width: 60px; height: 60px;">
+                    </td>
+                    <td (click)="openEtudiantViewModal(etudiant)"> {{ etudiant.codeEtudiant }} </td>
+                    <td (click)="openEtudiantViewModal(etudiant)"> {{ etudiant.user.firstName }} {{ etudiant.user.lastName }} </td>
+                    <td (click)="openEtudiantViewModal(etudiant)"> {{ etudiant.dateNaissance }} </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm me-2 my-2"
+                        (click)="openEtudiantFormModal(etudiant)">
+                        <i class="bi bi-pencil-square"></i> Éditer
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                          (click)="onDelete(etudiant.id)">
+                        <i class="bi bi-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+
+            <!-- Autres étudiants ici -->
+          </tbody>
+        </table>
+    </div>
+
+  </div>
+
+  <div class="p-1-4">
+    <div class="modal fade" id="etudiantFormModal" #etudiantFormModalRef>
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header p-2-2 bg-marron text-white">
+            <h5 class="modal-title" id="modalAjoutEtudiantLabel">{{ selectedEtudiant ? 'Modifier' : 'Ajouter' }} un étudiant</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body p-2-2">
+            <form [formGroup]="etudiantForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <input type="hidden" formControlName="id">
+                <div class="mb-3 col-md-6">
+                  <label for="codeEtudiant" class="form-label">Code étudiant</label>
+                  <input type="text" class="form-control" id="codeEtudiant" formControlName="codeEtudiant" name="codeEtudiant" required>
+                </div>
+              </div>
+              <div class="row" formGroupName="user">
+                <input type="hidden" formControlName="id">
+                <!-- Prénoms -->
+                <div class="mb-3 col-md-6">
+                  <label for="firstName" class="form-label">Prénoms</label>
+                  <input type="text" class="form-control" id="firstName" formControlName="firstName" name="firstName" required>
+                </div>
+                <!-- Nom -->
+                <div class="mb-3 col-md-6">
+                  <label for="lastName" class="form-label">Nom</label>
+                  <input type="text" class="form-control" id="lastName" formControlName="lastName" name="lastName" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Date de naissance -->
+                <div class="mb-3 col-md-6">
+                  <label for="dateNaissance" class="form-label">Date de naissance</label>
+                  <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" formControlName="dateNaissance" required>
+                </div>
+                <!-- Email -->
+                <div class="mb-3 col-md-6">
+                  <label for="emailPersonnel" class="form-label">Adresse Email Personnel</label>
+                  <input type="email" class="form-control" id="emailPersonnel" formControlName="emailPersonnel" name="emailPersonnel" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Téléphone -->
+                <div class="mb-3 col-md-6">
+                  <label for="telephone" class="form-label">Numéro de téléphone</label>
+                  <input type="tel" class="form-control" id="telephone" formControlName="telephone" name="telephone" required>
+                </div>
+                <!-- Adresse -->
+                <div class="mb-3 col-md-6">
+                  <label for="adresse" class="form-label">Adresse</label>
+                  <input type="text" class="form-control" id="adresse" formControlName="adresse" name="adresse" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <!-- Sexe -->
+                <div class="mb-3 col-md-6">
+                  <label class="form-label d-block">Sexe</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sexe" id="homme" value="M" formControlName="sexe">
+                    <label class="form-check-label" for="homme">Homme</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sexe" id="femme" value="F" formControlName="sexe">
+                    <label class="form-check-label" for="femme">Femme</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bouton -->
+              <div class="d-flex justify-content-center mx-auto">
+                <button type="submit" class="btn w-25 p-1-1 btn-bg-marron me-2">Enregistrer</button>
+                <button
+                type="button"
+                class="btn btn-bg-white w-25 p-1-1 btn-bg-white me-2"
+                (click)="closeEtudiantFormModal()"              >
+                Annuler
+              </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-1-4">
+    <div class="modal fade" id="etudiantViewModal" tabindex="-1" aria-labelledby="modalEtudiantLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Largeur agrandie -->
+            <div class="modal-content">
+                <div class="modal-header p-2-2 bg-marron text-white">
+                    <h5 class="modal-title text-white" id="modalEtudiantLabel">Détails de l'étudiant</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+
+                <div class="modal-body p-2-2">
+
+                    <!-- Rectangle Informations Personnelles -->
+                    <div class="p-2-2 mb-4 modal-scolarite-section">
+                        <h6 class="mb-3 text-marron fs-20">Informations personnelles</h6>
+                        <div class="row mb-2">
+                            <div class="col-md-6"><strong>Code étudiant :</strong> {{ selectedEtudiant?.codeEtudiant }}</div>
+                            <div class="col-md-6"><strong>Nom et Prénoms :</strong> {{ selectedEtudiant?.user?.firstName }} {{ selectedEtudiant?.user?.lastName }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-6"><strong>Date de naissance :</strong> {{ selectedEtudiant?.dateNaissance }}</div>
+                            <div class="col-md-6"><strong>Email personnel:</strong> {{ selectedEtudiant?.emailPersonnel }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"><strong>Téléphone :</strong>  {{ selectedEtudiant?.telephone }}</div>
+                            <div class="col-md-6"><strong>Adresse :</strong> {{ selectedEtudiant?.adresse }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Rectangle Inscriptions -->
+                    <div class="p-2-2 modal-scolarite-section">
+                        <h6 class="mb-3 text-marron fs-20">Inscriptions</h6>
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>Niveau</th>
+                                    <th>Formation</th>
+                                    <th>Année académique</th>
+                                    <th>Date d'inscription</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  @for (inscriptionEtudiant of inscriptionsEtudiant; track $index) {
+                                    <tr>
+                                      <td>{{inscriptionEtudiant.niveau.libelle}}</td>
+                                      <td>{{inscriptionEtudiant.formation.libelleFormation}}</td>
+                                      <td>{{inscriptionEtudiant.anneeAcademique.annee}}</td>
+                                      <td>{{inscriptionEtudiant.dateInscription | date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                  }
+                                <!-- D'autres inscriptions peuvent être ajoutées ici -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="p-1-4">
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="etudiantDeleteModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body">
+            Êtes-vous sûr de vouloir supprimer cette formation ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

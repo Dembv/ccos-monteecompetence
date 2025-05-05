@@ -1,0 +1,128 @@
+<div>
+  <h2 id="page-heading" data-cy="InformationHeading">
+    <span m2GdilTranslate="monteecompetencebackApp.information.home.title">Information</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.information.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-information"
+        [routerLink]="['/information/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span m2GdilTranslate="monteecompetencebackApp.information.home.createLabel">Créer un nouveau Information</span>
+      </button>
+    </div>
+  </h2>
+
+  <m-2-gdil-alert-error></m-2-gdil-alert-error>
+
+  <m-2-gdil-alert></m-2-gdil-alert>
+
+  @if (information?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span m2GdilTranslate="monteecompetencebackApp.information.home.notFound">Aucun Information trouvé</span>
+    </div>
+  }
+
+  @if (information && information.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr m2GdilSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" m2GdilSortBy="id">
+              <div class="d-flex">
+                <span m2GdilTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="titre">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.information.titre">Titre</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="imageInfos">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.information.imageInfos">Image Infos</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" m2GdilSortBy="contenu">
+              <div class="d-flex">
+                <span m2GdilTranslate="monteecompetencebackApp.information.contenu">Contenu</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (information of information; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/information', information.id, 'view']">{{ information.id }}</a>
+              </td>
+              <td>{{ information.titre }}</td>
+              <td>
+                @if (information.imageInfos) {
+                  <a (click)="openFile(information.imageInfos, information.imageInfosContentType)" m2GdilTranslate="entity.action.open"
+                    >Ouvrir</a
+                  >
+                  <span>{{ information.imageInfosContentType }}, {{ byteSize(information.imageInfos) }}</span>
+                }
+              </td>
+              <td>{{ information.contenu }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/information', information.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/information', information.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(information)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" m2GdilTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (information && information.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <m-2-gdil-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></m-2-gdil-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

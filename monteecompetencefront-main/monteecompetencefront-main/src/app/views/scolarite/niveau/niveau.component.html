@@ -1,0 +1,105 @@
+
+<app-scolarite-sidebar></app-scolarite-sidebar>
+<!-- Main Content -->
+<div class="main p-0">
+  <!--  -->
+  <app-header></app-header>
+
+    <!-- Formulaire d'ajout / modification de formation -->
+  <div class="d-flex p-1-4">
+    <h5 class="fs-20 text-marron">Ajouter un niveau</h5>
+  </div>
+
+  <!--  -->
+  <div class="p-1-4">
+    <!-- Formulaire d'ajout -->
+    <form [formGroup]="niveauForm" (ngSubmit)="onSubmit()" id="niveauForm" class="mb-4">
+        <div class="row g-3">
+        <div class="col-md-6">
+            <label for="codeNiveau" class="form-label">Code Niveau</label>
+            <input type="text" class="form-control" id="codeNiveau" formControlName="codeNiveau" placeholder="Code Niveau">
+            <div *ngIf="niveauForm.get('codeNiveau')?.invalid && niveauForm.get('codeNiveau')?.touched" class="text-danger">
+              <small>Le code du niveau est requis et doit comporter au moins 2 caractères.</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="libelle" class="form-label">Libellé Niveau</label>
+            <input type="text" class="form-control" id="libelle" formControlName="libelle" placeholder="Libelle niveau">
+            <div *ngIf="niveauForm.get('libelle')?.invalid && niveauForm.get('libelle')?.touched" class="text-danger">
+              <small>Le libellé du niveau doit comporter au moins 5 caractères.</small>
+            </div>
+        </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center w-50 gap-2">
+            <button type="submit" class="btn btn-bg-marron w-100 w-md-25" [disabled]="niveauForm.invalid">
+              {{ selectedNiveau ? 'Modifier' : 'Ajouter' }} le niveau
+            </button>
+            <button
+              type="button"
+              class="btn btn-bg-white w-100 w-md-25"
+              (click)="resetForm()"
+              *ngIf="selectedNiveau"
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+    </form>
+  </div>
+
+  <!-- Liste des formations -->
+  <div class="d-flex p-1-4">
+    <h5 class="fs-20 text-marron">Liste des niveaux</h5>
+  </div>
+
+  <!--  -->
+  <div class="p-1-4">
+    <!-- Tableau responsive -->
+    <div class="table-responsive shadow-sm rounded overflow-hidden">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Code Niveau</th>
+            <th scope="col">Libellé Niveau</th>
+            <th scope="col" class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let niveau of niveaux">
+            <td>{{ niveau.codeNiveau }}</td>
+            <td>{{ niveau.libelle }}</td>
+            <td class="text-center">
+              <div class="d-flex justify-content-center flex-wrap gap-2">
+                <button class="btn btn-primary btn-sm" (click)="onEdit(niveau)">
+                  <i class="bi bi-pencil-square me-1"></i> Éditer
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="onDelete(niveau.id)">
+                  <i class="bi bi-trash me-1"></i> Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body">
+            Êtes-vous sûr de vouloir supprimer ce niveau ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
